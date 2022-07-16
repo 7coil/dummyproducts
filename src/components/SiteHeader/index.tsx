@@ -1,14 +1,20 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { Container } from "../Container";
 
 const SiteHeader = () => (
-  <div className="flex bg-white drop-shadow">
-    <span>Company XYZ</span>
+  <div className="bg-white bg-gray-100 py-2 drop-shadow">
+    <Container>
+      <div className="flex flex-wrap">
+        <Link to="/">Company XYZ Product Database</Link>
 
-    <div className="ml-auto flex gap-2">
-      <span>Example Link 1</span>
-      <span>Example Link 2</span>
-      <span>Example Link 3</span>
-    </div>
+        <div className="ml-auto flex gap-6">
+          <Link to="/products">All Products</Link>
+          <span>Example Link 2</span>
+          <span>Example Link 3</span>
+        </div>
+      </div>
+    </Container>
   </div>
 );
 
