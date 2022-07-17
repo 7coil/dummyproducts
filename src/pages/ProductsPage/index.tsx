@@ -55,7 +55,7 @@ const ProductsPage = () => {
         <h2>Search Options</h2>
         <Form>
           <FormColumn>
-            <h3>Search Options</h3>
+            <h3>Search Parameters</h3>
             <FormColumn>
               <label htmlFor="search">Search Query</label>
               <input
