@@ -121,9 +121,8 @@ class Product {
           let newTotal = Number.parseInt(data.total, 10);
           setTotal(newTotal);
 
-          // Based on the new total, calculate the expected last page.
-          // This is to allow pagination to hide the "Next" button.
-          setLastPage(Math.floor(newTotal / pageSize));
+          // Calculate the number of pages required to store all pages
+          setLastPage(Math.ceil(newTotal / pageSize));
 
           // Convert the product data into our model.
           setProductData(

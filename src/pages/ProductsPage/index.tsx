@@ -244,7 +244,7 @@ const ProductsPage = () => {
           <Button>{page + 1}</Button>
 
           {/* Hide the next button if we're on the last page. */}
-          {lastPage !== page && (
+          {page < lastPage - 1 && (
             <Button onClick={() => setPage(page + 1)}>Forward</Button>
           )}
         </ButtonGroup>
