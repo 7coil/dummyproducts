@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import { Button } from "../../components/Button";
 import { ButtonGroup } from "../../components/ButtonGroup";
@@ -14,15 +15,21 @@ const ProductsPage = () => {
   const {
     page,
     setPage,
+    setPageSize,
     productData,
     lastPage,
     searchQuery,
+    setSearchQuery,
     searchFor,
     searchTime,
     pageSize,
   } = Product.useProducts(0, "");
   const categories = Category.useCategories();
 
+  /**
+   * Page State
+   * Keeps track of the buttons and forms present on this page.
+   */
   // Show Columns
   const [showIdColumn, setShowIdColumn] = useState(false);
   const [showThumbnailColumn, setShowThumbnailColumn] = useState(false);
@@ -44,9 +51,26 @@ const ProductsPage = () => {
   // Prefixed with "unsent" to differentiate between the user-controlled fields, which aren't sent yet,
   // and the useCategories variant, which will have been sent to the API.
   const [unsentSearchQuery, setUnsentSearchQuery] = useState("");
-  const [unsentPageSize, setUnsentPageSize] = useState(100);
+  const [unsentPageSize, setUnsentPageSize] = useState(pageSize);
   const disableSearchButton =
     unsentSearchQuery === searchQuery && unsentPageSize === pageSize;
+
+  /**
+   * Preload State from Query Parameters
+   */
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    // Grab search parameters
+    const query = searchParams.get("q") || "";
+    const pageLimit = parseInt(searchParams.get("limit") || "", 10) || pageSize;
+
+    // Set the form inputs to match what is in the search params
+    setUnsentSearchQuery(query);
+    setUnsentPageSize(pageLimit);
+
+    // Search with the query.
+    searchFor(query, pageLimit);
+  }, []);
 
   return (
     <Layout>
@@ -85,6 +109,10 @@ const ProductsPage = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   searchFor(unsentSearchQuery, unsentPageSize);
+                  setSearchParams({
+                    q: unsentSearchQuery,
+                    limit: unsentPageSize.toString(10),
+                  });
                 }}
                 // Disabled when current unsent params are the same as the previous query.
                 disabled={disableSearchButton}

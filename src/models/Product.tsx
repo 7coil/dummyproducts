@@ -79,6 +79,11 @@ class Product {
   }
 
   /**
+   * The default size of pages.
+   */
+  static DEFAULT_PAGE_SIZE = 100;
+
+  /**
    * Obtain the URL to perform an API GET request upon, with given paremeters & optional search query.
    * @param page The page number
    * @param pageSize The number of products to show on a page
@@ -126,14 +131,22 @@ class Product {
     const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
     const [searchTime, setSearchTime] = useState(new Date());
 
-    const [pageSize, setPageSize] = useState(100);
+    const [pageSize, setPageSize] = useState(Product.DEFAULT_PAGE_SIZE);
     const [total, setTotal] = useState(0);
     const [lastPage, setLastPage] = useState(0);
     const [productData, setProductData] = useState<Product[]>([]);
 
-    // When the page number changes, fetch the page, then update
-    useEffect(() => {
-      fetch(Product.getProductsEndpoint(page, pageSize, searchQuery))
+    /**
+     * Perform a search query.
+     * @param query The search query.
+     * @param pageSize The number of products to be displayed within a page
+     */
+    const searchFor = (q: string = "", ps: number) => {
+      setSearchQuery(q);
+      setPageSize(ps);
+      setPage(0);
+
+      fetch(Product.getProductsEndpoint(page, ps, q))
         .then((res) => res.json())
         .then((data) => {
           // Set new value for total, based on latest response.
@@ -149,23 +162,7 @@ class Product {
               (product: ProductInterface) => new Product(product)
             )
           );
-
-          // Update the fetch time.
-          setSearchTime(new Date());
         });
-    }, [page, searchQuery, pageSize]);
-
-    /**
-     * Perform a search query.
-     * @param query The search query.
-     * @param pageSize The number of products to be displayed within a page
-     */
-    const searchFor = (query: string, pageSize: number) => {
-      setSearchQuery(query);
-      setPageSize(pageSize);
-
-      // Reset page to 0 when performing a new query.
-      setPage(0);
     };
 
     return {
