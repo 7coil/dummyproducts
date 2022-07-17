@@ -92,6 +92,17 @@ const ProductsPage = () => {
   const disableSearchButton =
     unsentSearchQuery === searchQuery && unsentPageSize === pageSize;
 
+  const displayedProducts = productData.filter((product) => {
+    // If the product is in the deleted list, hide it.
+    if (deleted.includes(product.id)) return false;
+
+    // If the category is set to "all", display all files.
+    if (categoryFilter === "all") return true;
+
+    // Otherwise, filter the product by the current file.
+    return product.category === categoryFilter;
+  });
+
   return (
     <Layout>
       <SEO title={searchQuery ? `Search for "${searchQuery}"` : ""} />
@@ -301,7 +312,7 @@ const ProductsPage = () => {
         </p>
       </TextSection>
       <TableSection>
-        <table className="table-auto border-spacing-y-2">
+        <table className="w-full table-auto border-spacing-y-2">
           <thead>
             <tr>
               {showIdColumn && <th className="p-4">ID</th>}
@@ -316,17 +327,18 @@ const ProductsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {productData
-              .filter((product) => {
-                // If the product is in the deleted list, hide it.
-                if (deleted.includes(product.id)) return false;
-
-                // If the category is set to "all", display all files.
-                if (categoryFilter === "all") return true;
-
-                // Otherwise, filter the product by the current file.
-                return product.category === categoryFilter;
-              })
+            {displayedProducts.length === 0 && (
+              <tr>
+                {/* Extra colSpan is for the Actions column */}
+                <td
+                  className="text-center"
+                  colSpan={numberOfEnabledColumns + 1}
+                >
+                  There are no products to display on this page.
+                </td>
+              </tr>
+            )}
+            {displayedProducts
               .sort((a, b) => {
                 let indexA = a[productSort];
                 let indexB = b[productSort];
