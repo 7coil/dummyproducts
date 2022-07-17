@@ -12,6 +12,25 @@ import { Category } from "../../models/Category";
 import { Product, sortable_columns } from "../../models/Product";
 
 const ProductsPage = () => {
+  /**
+   * Preload State from Query Parameters
+   */
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Grab search parameters, and initialise them if they are not defined.
+  const initialSearchQuery = searchParams.get("q") || "";
+  const initialPageSize =
+    parseInt(searchParams.get("limit") || "", 10) || Product.DEFAULT_PAGE_SIZE;
+  const initialPage = parseInt(searchParams.get("page") || "", 10) || 0;
+
+  useEffect(() => {
+    // Set the query/limit in the fetcher and the forms.
+    setUnsentSearchQuery(initialSearchQuery);
+
+    // Clamp the page size between 5 and 200.
+    setUnsentPageSize(Math.min(200, Math.max(5, initialPageSize)));
+  }, []);
+
   const {
     page,
     setPage,
@@ -20,10 +39,10 @@ const ProductsPage = () => {
     lastPage,
     searchQuery,
     setSearchQuery,
-    searchFor,
     searchTime,
     pageSize,
-  } = Product.useProducts(0, "");
+    total,
+  } = Product.useProducts(initialPage, initialPageSize, initialSearchQuery);
   const categories = Category.useCategories();
 
   /**
@@ -55,26 +74,9 @@ const ProductsPage = () => {
   const disableSearchButton =
     unsentSearchQuery === searchQuery && unsentPageSize === pageSize;
 
-  /**
-   * Preload State from Query Parameters
-   */
-  const [searchParams, setSearchParams] = useSearchParams();
-  useEffect(() => {
-    // Grab search parameters
-    const query = searchParams.get("q") || "";
-    const pageLimit = parseInt(searchParams.get("limit") || "", 10) || pageSize;
-
-    // Set the form inputs to match what is in the search params
-    setUnsentSearchQuery(query);
-    setUnsentPageSize(pageLimit);
-
-    // Search with the query.
-    searchFor(query, pageLimit);
-  }, []);
-
   return (
     <Layout>
-      <SEO title={searchQuery ? `Search for ${searchQuery}` : ""} />
+      <SEO title={searchQuery ? `Search for "${searchQuery}"` : ""} />
 
       <TextSection>
         <h1>Products</h1>
@@ -90,6 +92,7 @@ const ProductsPage = () => {
                 id="search"
                 placeholder="Enter your search query..."
                 value={unsentSearchQuery}
+                maxLength={64}
                 onChange={(e) => setUnsentSearchQuery(e.target.value)}
               ></input>
             </FormColumn>
@@ -101,17 +104,28 @@ const ProductsPage = () => {
                 onChange={(e) =>
                   setUnsentPageSize(parseInt(e.target.value, 10))
                 }
+                min={5}
+                max={200}
+                step={5}
               ></input>
             </FormColumn>
             <ButtonGroup>
               <Button
                 type="submit"
                 onClick={(e) => {
+                  // Cancel the form, to prevent page refresh
                   e.preventDefault();
-                  searchFor(unsentSearchQuery, unsentPageSize);
+
+                  // Set-up the query for the fetcher
+                  setSearchQuery(unsentSearchQuery);
+                  setPageSize(unsentPageSize);
+                  setPage(0);
+
+                  // Copy our query to the URL Search Parameters
                   setSearchParams({
                     q: unsentSearchQuery,
                     limit: unsentPageSize.toString(10),
+                    page: "0",
                   });
                 }}
                 // Disabled when current unsent params are the same as the previous query.
@@ -379,7 +393,20 @@ const ProductsPage = () => {
       <TextSection>
         <ButtonGroup centre>
           {/* Only show the Back button if on Page 0 or above */}
-          {page > 0 && <Button onClick={() => setPage(page - 1)}>Back</Button>}
+          {page > 0 && (
+            <Button
+              onClick={() => {
+                setPage(page - 1);
+                setSearchParams({
+                  q: searchQuery,
+                  limit: pageSize.toString(10),
+                  page: `${page - 1}`,
+                });
+              }}
+            >
+              Back
+            </Button>
+          )}
 
           {/*
             The current page number
@@ -389,8 +416,19 @@ const ProductsPage = () => {
           <Button>{page + 1}</Button>
 
           {/* Hide the next button if we're on the last page. */}
-          {page < lastPage - 1 && (
-            <Button onClick={() => setPage(page + 1)}>Forward</Button>
+          {!lastPage && (
+            <Button
+              onClick={() => {
+                setPage(page + 1);
+                setSearchParams({
+                  q: searchQuery,
+                  limit: pageSize.toString(10),
+                  page: `${page + 1}`,
+                });
+              }}
+            >
+              Forward
+            </Button>
           )}
         </ButtonGroup>
       </TextSection>

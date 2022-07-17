@@ -124,6 +124,7 @@ class Product {
    */
   static useProducts(
     initialPageNumber: number = 0,
+    initialPageSize: number = 0,
     initialSearchQuery: string = ""
   ) {
     // The page number we wish to fetch.
@@ -131,30 +132,22 @@ class Product {
     const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
     const [searchTime, setSearchTime] = useState(new Date());
 
-    const [pageSize, setPageSize] = useState(Product.DEFAULT_PAGE_SIZE);
+    const [pageSize, setPageSize] = useState(initialPageSize);
     const [total, setTotal] = useState(0);
-    const [lastPage, setLastPage] = useState(0);
+    const [lastPage, setLastPage] = useState(false);
     const [productData, setProductData] = useState<Product[]>([]);
 
-    /**
-     * Perform a search query.
-     * @param query The search query.
-     * @param pageSize The number of products to be displayed within a page
-     */
-    const searchFor = (q: string = "", ps: number) => {
-      setSearchQuery(q);
-      setPageSize(ps);
-      setPage(0);
-
-      fetch(Product.getProductsEndpoint(page, ps, q))
+    useEffect(() => {
+      fetch(Product.getProductsEndpoint(page, pageSize, searchQuery))
         .then((res) => res.json())
         .then((data) => {
           // Set new value for total, based on latest response.
           let newTotal = Number.parseInt(data.total, 10);
           setTotal(newTotal);
 
-          // Calculate the number of pages required to store all pages
-          setLastPage(Math.ceil(newTotal / pageSize));
+          // Calculate if this is the last page.
+          let skipAmount = Number.parseInt(data.skip, 10);
+          setLastPage(skipAmount + pageSize >= newTotal);
 
           // Convert the product data into our model.
           setProductData(
@@ -163,7 +156,7 @@ class Product {
             )
           );
         });
-    };
+    }, [page, pageSize, searchQuery]);
 
     return {
       page,
@@ -177,7 +170,6 @@ class Product {
       lastPage,
       searchTime,
       setSearchTime,
-      searchFor,
     };
   }
 }
