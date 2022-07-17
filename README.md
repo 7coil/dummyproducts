@@ -26,6 +26,11 @@
   - [x] Filter products by category
   - [ ] Deleting Products
 
+## Additional Notes
+
+In a real scenario, the weirdness of the product name and descriptions, such as potential encoding issues,
+incorrect use of casing and spelling mistakes would be brought up to a supervisor.
+
 ## Licencing
 
 Copyright (c) "Example Company XYZ" 2022.  
