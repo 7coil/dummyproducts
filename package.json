@@ -12,6 +12,7 @@
     "@types/fetch-mock": "^7.3.5",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/react-star-ratings": "^2.3.0",
     "autoprefixer": "^10.4.7",
     "css-loader": "^6.7.1",
     "fetch-mock": "^9.11.0",
@@ -36,7 +37,8 @@
     "prettier-plugin-tailwindcss": "^0.1.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "react-star-ratings": "^2.3.0"
   },
   "scripts": {
     "dev": "webpack serve --node-env development",

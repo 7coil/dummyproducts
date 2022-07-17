@@ -5,6 +5,7 @@ import { Layout } from "../../components/Layout";
 import { TableSection } from "../../components/TableSection";
 import { TextSection } from "../../components/TextSection";
 import { Product } from "../../models/Product";
+import StarRatings from "react-star-ratings";
 
 const ProductsPage = () => {
   const { page, setPage, productData, lastPage } = Product.useProducts(0, "");
@@ -60,7 +61,15 @@ const ProductsPage = () => {
                   )}
                 </td>
                 <td className="px-6">{product.stock}</td>
-                <td className="px-6">{product.rating}</td>
+                <td className="w-[140px] px-6 text-right">
+                  <StarRatings
+                    starDimension="15px"
+                    starSpacing="1px"
+                    starRatedColor="gold"
+                    rating={product.rating}
+                  />
+                  {product.rating.toFixed(2)}
+                </td>
                 <td className="px-6">{product.brand}</td>
                 <td className="px-6">{product.category}</td>
               </tr>
