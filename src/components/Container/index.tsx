@@ -1,9 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 
 const Container = ({ children }: { children: ReactNode }) => (
-  <div className="max-w-screen-xl w-full px-4 mx-auto">
-    { children }
-  </div>
-)
+  <div className="mx-auto w-full max-w-screen-xl px-4">{children}</div>
+);
 
-export { Container }
+export { Container };

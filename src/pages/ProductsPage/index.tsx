@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import StarRatings from "react-star-ratings";
 import { Button } from "../../components/Button";
 import { ButtonGroup } from "../../components/ButtonGroup";
+import { Form, FormColumn, FormRow } from "../../components/Form";
 import { Layout } from "../../components/Layout";
 import { TableSection } from "../../components/TableSection";
 import { TextSection } from "../../components/TextSection";
-import { Product, sortable_columns } from "../../models/Product";
-import StarRatings from "react-star-ratings";
-import { Form, FormColumn, FormRow } from "../../components/Form";
 import { Category } from "../../models/Category";
+import { Product, sortable_columns } from "../../models/Product";
 
 const ProductsPage = () => {
   const {
