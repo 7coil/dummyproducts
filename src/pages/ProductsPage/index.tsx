@@ -4,6 +4,7 @@ import { Button } from "../../components/Button";
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { Form, FormColumn, FormRow } from "../../components/Form";
 import { Layout } from "../../components/Layout";
+import { SEO } from "../../components/SEO";
 import { TableSection } from "../../components/TableSection";
 import { TextSection } from "../../components/TextSection";
 import { Category } from "../../models/Category";
@@ -49,6 +50,8 @@ const ProductsPage = () => {
 
   return (
     <Layout>
+      <SEO title={searchQuery ? `Search for ${searchQuery}` : "All Products"} />
+
       <TextSection>
         <h1>Products</h1>
 

@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "../../components/Layout";
+import { SEO } from "../../components/SEO";
 import { TextSection } from "../../components/TextSection";
 
 const NotFoundPage = () => (
   <Layout>
+    <SEO title="404 Page not Found" />
     <TextSection>
       <h1>Not Found</h1>
       <p>
