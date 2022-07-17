@@ -237,14 +237,14 @@ const ProductsPage = () => {
         <table className="table-auto border-spacing-y-2">
           <thead>
             <tr>
-              {showIdColumn && <th className="px-6">ID</th>}
-              {showThumbnailColumn && <th className="px-6">Thumbnail</th>}
-              {showProductColumn && <th className="px-6">Product</th>}
-              {showPriceColumn && <th className="px-6">Sale Price</th>}
-              {showStockColumn && <th className="px-6">Stock</th>}
-              {showRatingColumn && <th className="px-6">Customer Rating</th>}
-              {showBrandColumn && <th className="px-6">Brand</th>}
-              {showCategoryColumn && <th className="px-6">Category</th>}
+              {showIdColumn && <th className="p-4">ID</th>}
+              {showThumbnailColumn && <th className="p-4">Thumbnail</th>}
+              {showProductColumn && <th className="p-4">Product</th>}
+              {showPriceColumn && <th className="p-4">Sale Price</th>}
+              {showStockColumn && <th className="p-4">Stock</th>}
+              {showRatingColumn && <th className="p-4">Customer Rating</th>}
+              {showBrandColumn && <th className="p-4">Brand</th>}
+              {showCategoryColumn && <th className="p-4">Category</th>}
             </tr>
           </thead>
           <tbody>
@@ -277,9 +277,11 @@ const ProductsPage = () => {
               })
               .map((product) => (
                 <tr key={product.id}>
-                  {showIdColumn && <td className="px-6">{product.id}</td>}
+                  {showIdColumn && (
+                    <td className="border px-4">{product.id}</td>
+                  )}
                   {showThumbnailColumn && (
-                    <td className="px-6">
+                    <td className="border px-4">
                       <img
                         className="h-24 w-24 object-cover"
                         src={product.thumbnail}
@@ -287,7 +289,7 @@ const ProductsPage = () => {
                     </td>
                   )}
                   {showProductColumn && (
-                    <td className="px-6">
+                    <td className="border px-4">
                       <p className="text-xl">{product.title}</p>
                       <p>
                         <i>{product.description}</i>
@@ -295,7 +297,7 @@ const ProductsPage = () => {
                     </td>
                   )}
                   {showPriceColumn && (
-                    <td className="px-6">
+                    <td className="border px-4">
                       <p className="whitespace-nowrap text-2xl">
                         £{product.getDiscountPrice()}
                       </p>
@@ -314,9 +316,11 @@ const ProductsPage = () => {
                       )}
                     </td>
                   )}
-                  {showStockColumn && <td className="px-6">{product.stock}</td>}
+                  {showStockColumn && (
+                    <td className="border px-4">{product.stock}</td>
+                  )}
                   {showRatingColumn && (
-                    <td className="w-[140px] px-6 text-right">
+                    <td className="w-[140px] border px-4 text-right">
                       <StarRatings
                         starDimension="15px"
                         starSpacing="1px"
@@ -326,9 +330,11 @@ const ProductsPage = () => {
                       {product.rating.toFixed(2)}
                     </td>
                   )}
-                  {showBrandColumn && <td className="px-6">{product.brand}</td>}
+                  {showBrandColumn && (
+                    <td className="border px-4">{product.brand}</td>
+                  )}
                   {showCategoryColumn && (
-                    <td className="px-6">{product.category}</td>
+                    <td className="border px-4">{product.category}</td>
                   )}
                 </tr>
               ))}
