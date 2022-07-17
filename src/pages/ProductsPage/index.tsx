@@ -45,13 +45,19 @@ const ProductsPage = () => {
                   <p className="whitespace-nowrap text-2xl">
                     £{product.getDiscountPrice()}
                   </p>
-                  <p className="whitespace-nowrap text-sm">
-                    {product.discountPercentage}% off, -£
-                    {product.getDiscountAmount()}
-                  </p>
-                  <p className="whitespace-nowrap text-sm">
-                    Was £{product.price}
-                  </p>
+
+                  {/* Render only if there is any discount. */}
+                  {product.discountPercentage && (
+                    <>
+                      <p className="whitespace-nowrap text-sm">
+                        {product.discountPercentage}% off, -£
+                        {product.getDiscountAmount()}
+                      </p>
+                      <p className="whitespace-nowrap text-sm">
+                        Was £{product.price}
+                      </p>
+                    </>
+                  )}
                 </td>
                 <td className="px-6">{product.stock}</td>
                 <td className="px-6">{product.rating}</td>
