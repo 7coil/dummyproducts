@@ -8,8 +8,10 @@ import { Layout } from "../../components/Layout";
 import { SEO } from "../../components/SEO";
 import { TableSection } from "../../components/TableSection";
 import { TextSection } from "../../components/TextSection";
+import { useDeletedArray } from "../../hooks/useDeleted";
 import { Category } from "../../models/Category";
 import { Product, sortable_columns } from "../../models/Product";
+import { ProductRow } from "./ProductRow";
 
 const ProductsPage = () => {
   /**
@@ -31,6 +33,7 @@ const ProductsPage = () => {
     setUnsentPageSize(Math.min(200, Math.max(5, initialPageSize)));
   }, []);
 
+  // Fetch all products that match the given page, page size and search query.
   const {
     page,
     setPage,
@@ -43,7 +46,12 @@ const ProductsPage = () => {
     pageSize,
     total,
   } = Product.useProducts(initialPage, initialPageSize, initialSearchQuery);
+
+  // Fetch all product categories
   const categories = Category.useCategories();
+
+  // Keep a set of "deleted" products that should no longer be displayed.
+  const { deleted, addDeleted } = useDeletedArray();
 
   /**
    * Page State
@@ -304,11 +312,15 @@ const ProductsPage = () => {
               {showRatingColumn && <th className="p-4">Customer Rating</th>}
               {showBrandColumn && <th className="p-4">Brand</th>}
               {showCategoryColumn && <th className="p-4">Category</th>}
+              <th className="p-4">Actions</th>
             </tr>
           </thead>
           <tbody>
             {productData
               .filter((product) => {
+                // If the product is in the deleted list, hide it.
+                if (deleted.includes(product.id)) return false;
+
                 // If the category is set to "all", display all files.
                 if (categoryFilter === "all") return true;
 
@@ -335,67 +347,19 @@ const ProductsPage = () => {
                 return 0;
               })
               .map((product) => (
-                <tr key={product.id}>
-                  {showIdColumn && (
-                    <td className="border px-4">{product.id}</td>
-                  )}
-                  {showThumbnailColumn && (
-                    <td className="border px-4">
-                      <img
-                        className="h-24 w-24 object-cover"
-                        src={product.thumbnail}
-                      ></img>
-                    </td>
-                  )}
-                  {showProductColumn && (
-                    <td className="border px-4">
-                      <p className="text-xl">{product.title}</p>
-                      <p>
-                        <i>{product.description}</i>
-                      </p>
-                    </td>
-                  )}
-                  {showPriceColumn && (
-                    <td className="border px-4">
-                      <p className="whitespace-nowrap text-2xl">
-                        £{product.getDiscountPrice()}
-                      </p>
-
-                      {/* Render only if there is any discount. */}
-                      {product.discountPercentage && (
-                        <>
-                          <p className="whitespace-nowrap text-sm">
-                            {product.discountPercentage}% off, -£
-                            {product.getDiscountAmount()}
-                          </p>
-                          <p className="whitespace-nowrap text-sm">
-                            Was £{product.price}
-                          </p>
-                        </>
-                      )}
-                    </td>
-                  )}
-                  {showStockColumn && (
-                    <td className="border px-4">{product.stock}</td>
-                  )}
-                  {showRatingColumn && (
-                    <td className="w-[140px] border px-4 text-right">
-                      <StarRatings
-                        starDimension="15px"
-                        starSpacing="1px"
-                        starRatedColor="gold"
-                        rating={product.rating}
-                      />
-                      {product.rating.toFixed(2)}
-                    </td>
-                  )}
-                  {showBrandColumn && (
-                    <td className="border px-4">{product.brand}</td>
-                  )}
-                  {showCategoryColumn && (
-                    <td className="border px-4">{product.category}</td>
-                  )}
-                </tr>
+                <ProductRow
+                  product={product}
+                  showIdColumn={showIdColumn}
+                  showThumbnailColumn={showThumbnailColumn}
+                  showProductColumn={showProductColumn}
+                  showPriceColumn={showPriceColumn}
+                  showStockColumn={showStockColumn}
+                  showRatingColumn={showRatingColumn}
+                  showBrandColumn={showBrandColumn}
+                  showCategoryColumn={showCategoryColumn}
+                  addDeleted={addDeleted}
+                  key={product.id}
+                />
               ))}
           </tbody>
         </table>

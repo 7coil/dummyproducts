@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apis from "../config.json";
+import { getEndpoints } from "../endpoints";
 import { Environment } from "../types/env";
 
 class Category {
@@ -9,16 +10,11 @@ class Category {
     this.id = id;
   }
 
-  static getAllCategoriesEndpoint() {
-    const env: Environment = process.env.NODE_ENV as Environment;
-    return apis[env].categories;
-  }
-
   static useCategories() {
     const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
-      fetch(this.getAllCategoriesEndpoint())
+      fetch(getEndpoints().categories)
         .then((res) => res.json())
         .then((data) => setCategories(data));
     }, []);

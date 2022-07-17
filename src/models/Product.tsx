@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apis from "../config.json";
+import { getEndpoints } from "../endpoints";
 import { Environment } from "../types/env";
 
 type sortable_columns =
@@ -79,6 +80,17 @@ class Product {
   }
 
   /**
+   * Perform a DELETE request on this product.
+   */
+  delete() {
+    const url = getEndpoints().delete;
+
+    return fetch(`${url}/${this.id}`, {
+      method: "DELETE",
+    }).then((res) => res.json());
+  }
+
+  /**
    * The default size of pages.
    */
   static DEFAULT_PAGE_SIZE = 100;
@@ -95,13 +107,12 @@ class Product {
     pageSize: number = 30,
     query: string = ""
   ) {
-    const env: Environment = process.env.NODE_ENV as Environment;
-    let url = apis[env].products;
+    let url = getEndpoints().products;
     const params = new URLSearchParams();
 
     // If a search query is provided, switch to the search endpoint.
     if (query.length > 0) {
-      url = apis[env].search;
+      url = getEndpoints().search;
 
       // Add the search query parameter.
       params.set("q", query);

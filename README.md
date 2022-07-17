@@ -24,7 +24,7 @@
   - [x] Sorting Products
   - [x] Search for Products
   - [x] Filter products by category
-  - [ ] Deleting Products
+  - [x] Deleting Products
 
 ## Additional Notes
 
