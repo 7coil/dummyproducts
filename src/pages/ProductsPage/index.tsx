@@ -50,7 +50,7 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      <SEO title={searchQuery ? `Search for ${searchQuery}` : "All Products"} />
+      <SEO title={searchQuery ? `Search for ${searchQuery}` : ""} />
 
       <TextSection>
         <h1>Products</h1>
@@ -81,7 +81,11 @@ const ProductsPage = () => {
             </FormColumn>
             <ButtonGroup>
               <Button
-                onClick={() => searchFor(unsentSearchQuery, unsentPageSize)}
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  searchFor(unsentSearchQuery, unsentPageSize);
+                }}
                 // Disabled when current unsent params are the same as the previous query.
                 disabled={disableSearchButton}
                 title={
