@@ -8,8 +8,9 @@
 
 1. Install dependencies with `yarn`
 2. Run `yarn dev` to start a development server at http://127.0.0.1:8080/
-3. Build your **developnent** copy with `yarn build`
-   - A production Webpack configuratio has not yet been created.
+3. Run tests with `yarn test`
+4. Build your production copy with `yarn build`
+5. Self-test your production copy with `yarn start`
 
 ## Progress
 
@@ -17,12 +18,12 @@
 // Progress would usually be in a Kanban style board; this
 ```
 
-- [ ] Homepage
-- [ ] Products
-  - [ ] Viewing a list
-  - [ ] Sorting Products
-  - [ ] Search for Products
-  - [ ] Filter products by category
+- [x] Homepage
+- [x] Products
+  - [x] Viewing a list
+  - [x] Sorting Products
+  - [x] Search for Products
+  - [x] Filter products by category
   - [ ] Deleting Products
 
 ## Licencing
