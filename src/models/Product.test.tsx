@@ -3,14 +3,20 @@ import { Product, ProductInterface } from "./Product";
 describe("Product class", () => {
   // Test to check if page number results in correct API & query params to be generated.
   test("Can generate a Product API URL depending on page", () => {
-    expect(Product.getAllProductsEndpoint(0, 30)).toBe(
+    expect(Product.getProductsEndpoint(0, 30)).toBe(
       "https://dummyjson.com/products?skip=0&limit=30"
     );
-    expect(Product.getAllProductsEndpoint(1, 30)).toBe(
+    expect(Product.getProductsEndpoint(1, 30)).toBe(
       "https://dummyjson.com/products?skip=30&limit=30"
     );
-    expect(Product.getAllProductsEndpoint(2, 30)).toBe(
+    expect(Product.getProductsEndpoint(2, 30)).toBe(
       "https://dummyjson.com/products?skip=60&limit=30"
+    );
+  });
+
+  test("Can generate a Product API URL with correct search query", () => {
+    expect(Product.getProductsEndpoint(0, 100, "iPhone 7")).toBe(
+      "https://dummyjson.com/products/search?q=iPhone+7&skip=0&limit=100"
     );
   });
 
