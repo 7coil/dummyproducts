@@ -136,8 +136,12 @@ class Product {
     const [total, setTotal] = useState(0);
     const [lastPage, setLastPage] = useState(false);
     const [productData, setProductData] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+      // Display a loading screen...
+      setIsLoading(true);
+
       fetch(Product.getProductsEndpoint(page, pageSize, searchQuery))
         .then((res) => res.json())
         .then((data) => {
@@ -155,6 +159,12 @@ class Product {
               (product: ProductInterface) => new Product(product)
             )
           );
+
+          // No longer waiting for the data to be fetched.
+          setIsLoading(false);
+
+          // Set the time at which the fetch was completed.
+          setSearchTime(new Date());
         });
     }, [page, pageSize, searchQuery]);
 
@@ -170,6 +180,7 @@ class Product {
       lastPage,
       searchTime,
       setSearchTime,
+      isLoading,
     };
   }
 }
