@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import apis from "../config.json";
 import { Environment } from "../types/env";
 
+type sortable_columns =
+  | "category"
+  | "title"
+  | "description"
+  | "price"
+  | "stock";
+
 interface ProductInterface {
   id: number;
   title: string;
@@ -139,4 +146,4 @@ class Product {
   }
 }
 
-export { Product, ProductInterface };
+export { Product, ProductInterface, sortable_columns };
