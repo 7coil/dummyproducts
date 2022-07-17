@@ -413,7 +413,9 @@ const ProductsPage = () => {
             WARNING! Adding (+1) to the pageNumber for End-User readability.
             Page Numbers internally are still zero-indexed.
           */}
-          <Button>{page + 1}</Button>
+          <Button disabled title={`Page ${page + 1}`}>
+            {page + 1}
+          </Button>
 
           {/* Hide the next button if we're on the last page. */}
           {!lastPage && (
