@@ -7,10 +7,22 @@ import { TextSection } from "../../components/TextSection";
 import { Product, sortable_columns } from "../../models/Product";
 import StarRatings from "react-star-ratings";
 import { Form, FormColumn, FormRow } from "../../components/Form";
+import { Category } from "../../models/Category";
 
 const ProductsPage = () => {
-  const { page, setPage, productData, lastPage } = Product.useProducts(0, "");
+  const {
+    page,
+    setPage,
+    productData,
+    lastPage,
+    searchQuery,
+    searchFor,
+    searchTime,
+    pageSize,
+  } = Product.useProducts(0, "");
+  const categories = Category.useCategories();
 
+  // Show Columns
   const [showIdColumn, setShowIdColumn] = useState(false);
   const [showThumbnailColumn, setShowThumbnailColumn] = useState(false);
   const [showProductColumn, setShowProductColumn] = useState(true);
@@ -20,16 +32,84 @@ const ProductsPage = () => {
   const [showBrandColumn, setShowBrandColumn] = useState(false);
   const [showCategoryColumn, setShowCategoryColumn] = useState(true);
 
+  // Sort
   const [productSort, setProductSort] = useState<sortable_columns>("title");
   const [sortHighToLow, setSortHighToLow] = useState(false);
+
+  // Filter
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+
+  // Search Options
+  // Prefixed with "unsent" to differentiate between the user-controlled fields, which aren't sent yet,
+  // and the useCategories variant, which will have been sent to the API.
+  const [unsentSearchQuery, setUnsentSearchQuery] = useState("");
+  const [unsentPageSize, setUnsentPageSize] = useState(100);
+  const disableSearchButton =
+    unsentSearchQuery === searchQuery && unsentPageSize === pageSize;
 
   return (
     <Layout>
       <TextSection>
         <h1>Products</h1>
-        <h2>Search Options</h2>
 
+        <h2>Search Options</h2>
         <Form>
+          <FormColumn>
+            <h3>Search Options</h3>
+            <FormColumn>
+              <label htmlFor="search">Search Query</label>
+              <input
+                type="text"
+                id="search"
+                placeholder="Enter your search query..."
+                value={unsentSearchQuery}
+                onChange={(e) => setUnsentSearchQuery(e.target.value)}
+              ></input>
+            </FormColumn>
+            <FormColumn>
+              <label htmlFor="limit">Products per Page</label>
+              <input
+                type="number"
+                value={unsentPageSize}
+                onChange={(e) =>
+                  setUnsentPageSize(parseInt(e.target.value, 10))
+                }
+              ></input>
+            </FormColumn>
+            <ButtonGroup>
+              <Button
+                onClick={() => searchFor(unsentSearchQuery, unsentPageSize)}
+                // Disabled when current unsent params are the same as the previous query.
+                disabled={disableSearchButton}
+                title={
+                  disableSearchButton
+                    ? "Please change search parameters before performing a query."
+                    : ""
+                }
+              >
+                Update Query
+              </Button>
+            </ButtonGroup>
+          </FormColumn>
+          <FormColumn>
+            <h3>Filter</h3>
+
+            <FormColumn>
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+              >
+                <option value="all">All Categories</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </FormColumn>
+          </FormColumn>
           <FormColumn>
             <h3>Sort</h3>
 
@@ -52,6 +132,7 @@ const ProductsPage = () => {
               <label htmlFor="sortdirection">Sort direction</label>
               <select
                 onChange={(e) => setSortHighToLow(e.target.value === "true")}
+                value={`${sortHighToLow}`}
                 id="sortdirection"
               >
                 <option value="false">Lowest to Highest (A to Z)</option>
@@ -136,6 +217,22 @@ const ProductsPage = () => {
           </FormColumn>
         </Form>
       </TextSection>
+      <TextSection>
+        <h2>{searchQuery ? `Search for ${searchQuery}` : "All products"}</h2>
+
+        <p>
+          Report Generated at:{" "}
+          {searchTime.toLocaleDateString(undefined, {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </p>
+      </TextSection>
       <TableSection>
         <table className="table-auto border-spacing-y-2">
           <thead>
@@ -152,6 +249,13 @@ const ProductsPage = () => {
           </thead>
           <tbody>
             {productData
+              .filter((product) => {
+                // If the category is set to "all", display all files.
+                if (categoryFilter === "all") return true;
+
+                // Otherwise, filter the product by the current file.
+                return product.category === categoryFilter;
+              })
               .sort((a, b) => {
                 let indexA = a[productSort];
                 let indexB = b[productSort];

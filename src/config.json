@@ -1,11 +1,17 @@
 {
   "production": {
-    "products": "https://dummyjson.com/products"
+    "products": "https://dummyjson.com/products",
+    "categories": "https://dummyjson.com/products/categories",
+    "search": "https://dummyjson.com/products/search"
   },
   "development": {
-    "products": "https://dummyjson.com/products"
+    "products": "https://dummyjson.com/products",
+    "categories": "https://dummyjson.com/products/categories",
+    "search": "https://dummyjson.com/products/search"
   },
   "test": {
-    "products": "https://dummyjson.com/products"
+    "products": "https://dummyjson.com/products",
+    "categories": "https://dummyjson.com/products/categories",
+    "search": "https://dummyjson.com/products/search"
   }
 }
