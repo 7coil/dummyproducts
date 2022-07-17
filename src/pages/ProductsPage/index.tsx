@@ -58,6 +58,16 @@ const ProductsPage = () => {
   const [showRatingColumn, setShowRatingColumn] = useState(false);
   const [showBrandColumn, setShowBrandColumn] = useState(false);
   const [showCategoryColumn, setShowCategoryColumn] = useState(true);
+  const numberOfEnabledColumns = [
+    showIdColumn,
+    showThumbnailColumn,
+    showProductColumn,
+    showPriceColumn,
+    showStockColumn,
+    showRatingColumn,
+    showBrandColumn,
+    showCategoryColumn,
+  ].filter((col) => col).length;
 
   // Sort
   const [productSort, setProductSort] = useState<sortable_columns>("title");
@@ -190,7 +200,7 @@ const ProductsPage = () => {
             </FormColumn>
           </FormColumn>
           <FormColumn>
-            <h3>Show Columns</h3>
+            <h3>Show Columns ({numberOfEnabledColumns})</h3>
             <FormRow>
               <input
                 checked={showIdColumn}
