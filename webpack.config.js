@@ -1,9 +1,10 @@
+const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
   entry: "./src/index.tsx",
-  mode: "development",
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
@@ -31,5 +32,5 @@ module.exports = {
     compress: true,
     port: 8080,
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [new HtmlWebpackPlugin(), new DefinePlugin(["NODE_ENV"])],
 };

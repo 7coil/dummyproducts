@@ -4,13 +4,15 @@ import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { IndexPage } from "./pages/IndexPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { ProductsPage } from "./pages/ProductsPage";
 
 const App = () => (
   <HashRouter>
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <Routes>
         <Route index element={<IndexPage />} />
+        <Route path="/products/" element={<ProductsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <SiteFooter />

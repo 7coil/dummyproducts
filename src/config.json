@@ -1,0 +1,11 @@
+{
+  "production": {
+    "products": "https://dummyjson.com/products"
+  },
+  "development": {
+    "products": "https://dummyjson.com/products"
+  },
+  "test": {
+    "products": "https://dummyjson.com/products"
+  }
+}
