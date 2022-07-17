@@ -41,4 +41,36 @@ describe("Product class", () => {
 
     expect(product).toMatchObject<ProductInterface>(iphone);
   });
+
+  test("Can calculate correct discount amounts", () => {
+    const product = new Product({
+      id: 2,
+      title: "iPhone X",
+      description:
+        "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+      price: 899,
+      discountPercentage: 17.94,
+      rating: 4.44,
+      stock: 34,
+      brand: "Apple",
+      category: "smartphones",
+      thumbnail: "https://dummyjson.com/image/i/products/2/thumbnail.jpg",
+      images: [
+        "https://dummyjson.com/image/i/products/2/1.jpg",
+        "https://dummyjson.com/image/i/products/2/2.jpg",
+        "https://dummyjson.com/image/i/products/2/3.jpg",
+        "https://dummyjson.com/image/i/products/2/thumbnail.jpg",
+      ],
+    });
+
+    // £899 * 0.1794 = 161.2806 (around 161.28)
+    // £899 - 161.28 = 737.72
+    expect(product.getDiscountAmount()).toBe("161.28");
+    expect(product.getDiscountPrice()).toBe("737.72");
+
+    // See if a discount of 0% changes the expected values.
+    product.discountPercentage = 0;
+    expect(product.getDiscountAmount()).toBe("0.00");
+    expect(product.getDiscountPrice()).toBe("899.00");
+  });
 });
