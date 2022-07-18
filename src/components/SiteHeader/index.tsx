@@ -6,7 +6,9 @@ const SiteHeader = () => (
   <div className="bg-white bg-gray-100 py-4 drop-shadow">
     <Container>
       <div className="flex flex-wrap">
-        <Link to="/">Company XYZ Product Database</Link>
+        <Link to="/">
+          <span className="font-semibold">Company XYZ Product Database</span>
+        </Link>
 
         <div className="ml-auto flex gap-6">
           <Link to="/products">All Products</Link>
