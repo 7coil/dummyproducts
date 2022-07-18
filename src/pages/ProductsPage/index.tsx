@@ -318,7 +318,7 @@ const ProductsPage = () => {
               {showIdColumn && <th className="p-4">ID</th>}
               {showThumbnailColumn && <th className="p-4">Thumbnail</th>}
               {showProductColumn && <th className="p-4">Product</th>}
-              {showPriceColumn && <th className="p-4">Sale Price</th>}
+              {showPriceColumn && <th className="p-4">Price</th>}
               {showStockColumn && <th className="p-4">Stock</th>}
               {showRatingColumn && <th className="p-4">Customer Rating</th>}
               {showBrandColumn && <th className="p-4">Brand</th>}
