@@ -10,11 +10,7 @@ const IndexPage = () => (
   <Layout>
     <HeroSection
       title="Company XYZ Product Database"
-      subtitle={
-        <>
-          Insert a <i>catchy</i> database subtitle here!
-        </>
-      }
+      subtitle="Insert a catchy database subtitle here!"
     >
       <ButtonGroup centre>
         <Link to="/products">

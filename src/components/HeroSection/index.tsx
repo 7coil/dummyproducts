@@ -19,8 +19,8 @@ const HeroSection = ({
   <SectionProvider className="bg-blue-100 py-6">
     <Container>
       <div className="flex flex-col gap-6 text-center">
-        {title && <h1 className="text-6xl">{title}</h1>}
-        {subtitle && <p className="text-3xl">{subtitle}</p>}
+        {title && <h1 className="text-4xl">{title}</h1>}
+        {subtitle && <p className="text-2xl">{subtitle}</p>}
         {children}
       </div>
     </Container>

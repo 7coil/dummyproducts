@@ -39,26 +39,24 @@ const ProductRow = ({
       )}
       {showProductColumn && (
         <td className="border px-4">
-          <p className="text-xl">{product.title}</p>
-          <p>
-            <i>{product.description}</i>
-          </p>
+          <p className="font-bold">{product.title}</p>
+          <p>{product.description}</p>
         </td>
       )}
       {showPriceColumn && (
         <td className="border px-4">
-          <p className="whitespace-nowrap text-2xl">
+          <p className="whitespace-nowrap font-bold">
             £{product.getDiscountPrice()}
           </p>
 
           {/* Render only if there is any discount. */}
           {product.discountPercentage && (
             <>
-              <p className="whitespace-nowrap text-sm">
+              <p className="whitespace-nowrap">
                 {product.discountPercentage}% off, -£
                 {product.getDiscountAmount()}
               </p>
-              <p className="whitespace-nowrap text-sm">Was £{product.price}</p>
+              <p className="whitespace-nowrap">Was £{product.price}</p>
             </>
           )}
         </td>
