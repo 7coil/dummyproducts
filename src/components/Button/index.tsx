@@ -18,10 +18,10 @@ const Button = ({
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }) => (
   <button
-    className={`px-6 py-3 ${
+    className={`rounded px-6 py-3 ${
       disabled
         ? "cursor-not-allowed bg-blue-100 text-gray-400"
-        : "cursor-pointer bg-blue-300"
+        : "cursor-pointer bg-blue-300 transition-colors hover:bg-blue-200"
     }`}
     onClick={onClick}
     title={title}
