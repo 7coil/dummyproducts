@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container } from "../Container";
 
 const SiteHeader = () => (
-  <div className="bg-white bg-gray-100 py-2 drop-shadow">
+  <div className="bg-white bg-gray-100 py-4 drop-shadow">
     <Container>
       <div className="flex flex-wrap">
         <Link to="/">Company XYZ Product Database</Link>
