@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import { Button } from "../../components/Button";
 import { ButtonGroup } from "../../components/ButtonGroup";
-import { Form, FormColumn, FormRow } from "../../components/Form";
+import { Form, FormColumn, FormRow, Input } from "../../components/Form";
 import { Layout } from "../../components/Layout";
 import { SEO } from "../../components/SEO";
 import { TableSection } from "../../components/TableSection";
@@ -109,25 +109,22 @@ const ProductsPage = () => {
 
       <TextSection>
         <h1>Products</h1>
-
-        <h2>Search Options</h2>
         <Form>
-          <FormColumn>
-            <h3>Search Parameters</h3>
+          <FormColumn gap>
             <FormColumn>
               <label htmlFor="search">Search Query</label>
-              <input
+              <Input
                 type="text"
                 id="search"
                 placeholder="Enter your search query..."
                 value={unsentSearchQuery}
                 maxLength={64}
                 onChange={(e) => setUnsentSearchQuery(e.target.value)}
-              ></input>
+              ></Input>
             </FormColumn>
             <FormColumn>
               <label htmlFor="limit">Products per Page</label>
-              <input
+              <Input
                 type="number"
                 value={unsentPageSize}
                 onChange={(e) =>
@@ -136,7 +133,7 @@ const ProductsPage = () => {
                 min={5}
                 max={200}
                 step={5}
-              ></input>
+              ></Input>
             </FormColumn>
             <ButtonGroup>
               <Button
@@ -169,6 +166,8 @@ const ProductsPage = () => {
               </Button>
             </ButtonGroup>
           </FormColumn>
+        </Form>
+        <Form className="mt-6 bg-gray-100 px-3 drop-shadow md:gap-10 md:pb-6 xl:px-20">
           <FormColumn>
             <h3>Filter</h3>
 

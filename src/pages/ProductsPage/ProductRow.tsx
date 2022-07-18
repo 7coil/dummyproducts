@@ -45,19 +45,18 @@ const ProductRow = ({
       )}
       {showPriceColumn && (
         <td className="border px-4">
-          <p className="whitespace-nowrap font-bold">
-            £{product.getDiscountPrice()}
+          <p className="whitespace-nowrap">
+            <span className="whitespace-nowrap font-bold">
+              £{product.getDiscountPrice()}
+            </span>{" "}
+            {product.discountPercentage && (
+              <span>({product.discountPercentage}% off)</span>
+            )}
           </p>
 
           {/* Render only if there is any discount. */}
           {product.discountPercentage && (
-            <>
-              <p className="whitespace-nowrap">
-                {product.discountPercentage}% off, -£
-                {product.getDiscountAmount()}
-              </p>
-              <p className="whitespace-nowrap">Was £{product.price}</p>
-            </>
+            <p className="whitespace-nowrap">was £{product.price}</p>
           )}
         </td>
       )}
@@ -86,6 +85,9 @@ const ProductRow = ({
             });
           }}
           disabled={isDeleting}
+          activeColour="bg-red-300"
+          hoverColour="hover:bg-red-200"
+          disabledColour="bg-gray-100"
         >
           Delete
         </Button>
