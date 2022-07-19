@@ -1,0 +1,7 @@
+version: '3.9'
+
+services:
+  dummyproducts:
+    build: .
+    ports:
+      - 8080:8080

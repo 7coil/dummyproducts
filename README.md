@@ -12,6 +12,15 @@
 4. Build your production copy with `yarn build`
 5. Self-test your production copy with `yarn start`
 
+### Docker
+
+This Dockerfile is for development purposes only, and not for production use.
+Deployment of this website should be done by serving the `dist` folder on a static webserver,
+such as CI/CD providers like Cloudflare Pages, GitHub Pages or Netlify.
+
+1. `docker compose up`
+2. View the development server at http://127.0.0.1:8080/
+
 ## Progress
 
 ```ts
