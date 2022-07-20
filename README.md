@@ -4,6 +4,13 @@
 
 ## Development Instructions
 
+### Storybook
+
+Get a look at what components are available by launching the Storybook client.
+
+1. Install dependencies with `yarn`
+2. Run `yarn storybook`
+
 ### Baremetal
 
 Please use NodeJS 16 (LTS) to run this project.
