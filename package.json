@@ -2,9 +2,20 @@
   "name": "dummyproducts",
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
+    "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
+    "@mdx-js/react": "^1.6.22",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-docs": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
     "@tailwindcss/typography": "^0.5.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -16,6 +27,7 @@
     "@types/react-modal": "^3.13.1",
     "@types/react-star-ratings": "^2.3.0",
     "autoprefixer": "^10.4.7",
+    "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "fetch-mock": "^9.11.0",
     "fetch-mock-jest": "^1.5.1",
@@ -53,6 +65,8 @@
     "build": "webpack --node-env production",
     "format": "prettier . --write",
     "test": "jest",
-    "start": "http-server dist/"
+    "start": "http-server dist/",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }
