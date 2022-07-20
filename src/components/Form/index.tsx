@@ -27,7 +27,11 @@ const FormRow = ({ children }: { children: ReactNode }) => (
 );
 
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input {...props} className="rounded bg-blue-200 px-6 py-1" />
+  <input {...props} className="h-10 rounded bg-blue-200 px-6" />
 );
 
-export { Form, FormColumn, FormRow, Input };
+const Select = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => (
+  <select {...props} className="h-10 rounded bg-blue-200 px-6" />
+);
+
+export { Form, FormColumn, FormRow, Input, Select };

@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { ButtonGroup } from "../../components/ButtonGroup";
-import { Form, FormColumn, FormRow, Input } from "../../components/Form";
+import {
+  Form,
+  FormColumn,
+  FormRow,
+  Input,
+  Select,
+} from "../../components/Form";
 import { Layout } from "../../components/Layout";
 import { SEO } from "../../components/SEO";
 import { TableSection } from "../../components/TableSection";
@@ -133,16 +139,18 @@ const ProductsPage = () => {
             </FormColumn>
             <FormColumn>
               <label htmlFor="limit">Products per Page</label>
-              <Input
-                type="number"
+              <Select
                 value={unsentPageSize}
                 onChange={(e) =>
                   setUnsentPageSize(parseInt(e.target.value, 10))
                 }
-                min={5}
-                max={200}
-                step={5}
-              ></Input>
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </Select>
             </FormColumn>
             <ButtonGroup>
               <Button
