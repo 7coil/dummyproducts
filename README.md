@@ -6,6 +6,16 @@
 
 ### Baremetal
 
+Please use NodeJS 16 (LTS) to run this project.
+You can install this by running `pacman -S nodejs-lts-gallium` on Arch Linux,
+or visit https://nodejs.org/ for more information.
+
+You will also need the Yarn package manager to run this project.
+You can install this with `sudo` or Windows Administrator permissions with
+the `npm i -g yarn` command.
+
+Within the project directory...
+
 1. Install dependencies with `yarn`
 2. Run `yarn dev` to start a development server at http://127.0.0.1:8080/
 3. Run tests with `yarn test`
@@ -24,7 +34,7 @@ such as CI/CD providers like Cloudflare Pages, GitHub Pages or Netlify.
 ## Progress
 
 ```ts
-// Progress would usually be in a Kanban style board; this
+// Progress would usually be in a Kanban style board; this is just a simple tracker for myself.
 ```
 
 - [x] Homepage
