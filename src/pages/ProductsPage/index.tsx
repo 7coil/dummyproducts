@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import StarRatings from "react-star-ratings";
 import { Button } from "../../components/Button";
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { Form, FormColumn, FormRow, Input } from "../../components/Form";
@@ -11,6 +10,7 @@ import { TextSection } from "../../components/TextSection";
 import { useDeletedArray } from "../../hooks/useDeleted";
 import { Category } from "../../models/Category";
 import { Product, sortable_columns } from "../../models/Product";
+import { DeleteModal } from "./DeleteModal";
 import { ProductRow } from "./ProductRow";
 
 const ProductsPage = () => {
@@ -53,6 +53,9 @@ const ProductsPage = () => {
   // Keep a set of "deleted" products that should no longer be displayed.
   const { deleted, addDeleted } = useDeletedArray();
 
+  // Keep a variable for remembering what modal is currently being deleted.
+  const [productToDelete, setProductToDelete] = useState<null | Product>(null);
+
   /**
    * Page State
    * Keeps track of the buttons and forms present on this page.
@@ -94,7 +97,7 @@ const ProductsPage = () => {
 
   const displayedProducts = productData.filter((product) => {
     // If the product is in the deleted list, hide it.
-    if (deleted.includes(product.id)) return false;
+    if (deleted.includes(product)) return false;
 
     // If the category is set to "all", display all files.
     if (categoryFilter === "all") return true;
@@ -106,6 +109,12 @@ const ProductsPage = () => {
   return (
     <Layout>
       <SEO title={searchQuery ? `Search for "${searchQuery}"` : ""} />
+
+      <DeleteModal
+        product={productToDelete}
+        addDeleted={addDeleted}
+        setProductToDelete={setProductToDelete}
+      />
 
       <TextSection>
         <h1>Products</h1>
@@ -368,7 +377,7 @@ const ProductsPage = () => {
                   showRatingColumn={showRatingColumn}
                   showBrandColumn={showBrandColumn}
                   showCategoryColumn={showCategoryColumn}
-                  addDeleted={addDeleted}
+                  setProductToDelete={setProductToDelete}
                   key={product.id}
                 />
               ))}

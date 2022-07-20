@@ -13,6 +13,7 @@
     "@types/marked": "^4.0.3",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/react-modal": "^3.13.1",
     "@types/react-star-ratings": "^2.3.0",
     "autoprefixer": "^10.4.7",
     "css-loader": "^6.7.1",
@@ -43,6 +44,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-modal": "^3.15.1",
     "react-router-dom": "^6.3.0",
     "react-star-ratings": "^2.3.0"
   },

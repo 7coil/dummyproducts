@@ -1,7 +1,6 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import StarRatings from "react-star-ratings";
-import { Button } from "../../components/Button";
+import { RedButton } from "../../components/Button";
 import { Product } from "../../models/Product";
 
 const ProductRow = ({
@@ -14,7 +13,7 @@ const ProductRow = ({
   showRatingColumn,
   showBrandColumn,
   showCategoryColumn,
-  addDeleted,
+  setProductToDelete,
 }: {
   product: Product;
   showIdColumn: boolean;
@@ -25,10 +24,8 @@ const ProductRow = ({
   showRatingColumn: boolean;
   showBrandColumn: boolean;
   showCategoryColumn: boolean;
-  addDeleted: (id: number) => void;
+  setProductToDelete: (product: Product) => void;
 }) => {
-  const [isDeleting, setIsDeleting] = useState(false);
-
   return (
     <tr>
       {showIdColumn && <td className="border px-4">{product.id}</td>}
@@ -77,20 +74,13 @@ const ProductRow = ({
         <td className="border px-4">{product.category}</td>
       )}
       <td className="border px-4">
-        <Button
+        <RedButton
           onClick={() => {
-            setIsDeleting(true);
-            product.delete().then(() => {
-              addDeleted(product.id);
-            });
+            setProductToDelete(product);
           }}
-          disabled={isDeleting}
-          activeColour="bg-red-300"
-          hoverColour="hover:bg-red-200"
-          disabledColour="bg-gray-100"
         >
           Delete
-        </Button>
+        </RedButton>
       </td>
     </tr>
   );
